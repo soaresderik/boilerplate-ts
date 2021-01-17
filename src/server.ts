@@ -23,6 +23,7 @@ import routes from './routes';
         });
       }
 
+      console.log({ err });
       return response.status(500).json({
         status: 500,
         message: 'Internal server error',
