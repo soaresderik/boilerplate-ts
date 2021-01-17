@@ -1,13 +1,22 @@
-import { UserService } from '@modules/users';
+import { UserService, UserRepository } from '@modules/users';
+import { usersDraft } from './__mocks__';
 
 describe('User Module', () => {
   it('Should be create a new user', async () => {
-    const userService = new UserService();
-
     const params = {
       email: 'example@example.com',
       password: 'example',
     };
+
+    UserRepository.prototype.findByEmail = jest
+      .fn()
+      .mockImplementationOnce(() => null);
+
+    UserRepository.prototype.create = jest
+      .fn()
+      .mockImplementationOnce(() => usersDraft({ email: params.email })[0]);
+
+    const userService = new UserService();
 
     const result = await userService.create(params);
 
@@ -16,12 +25,19 @@ describe('User Module', () => {
 
   it('Should be throw an error if user exist', async () => {
     try {
-      const userService = new UserService();
-
       const params = {
         email: 'mockeduser@example.com',
         password: 'example',
       };
+
+      UserRepository.prototype.findByEmail = jest.fn().mockImplementationOnce(
+        () =>
+          usersDraft({
+            email: params.email,
+          })[0],
+      );
+
+      const userService = new UserService();
 
       await userService.create(params);
     } catch (err) {
@@ -31,12 +47,19 @@ describe('User Module', () => {
   });
 
   it('Should be logged in', async () => {
-    const userService = new UserService();
-
     const params = {
       email: 'mockeduser@example.com',
       password: 'example',
     };
+
+    UserRepository.prototype.findByEmail = jest.fn().mockImplementationOnce(
+      () =>
+        usersDraft({
+          email: params.email,
+        })[0],
+    );
+
+    const userService = new UserService();
 
     const result = await userService.authenticate(params);
 

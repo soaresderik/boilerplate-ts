@@ -31,9 +31,7 @@
         "${fileBasenameNoExtension}",
         "--config",
         "jest.config.js",
-        "--no-cache",
-        "--collectCoverageFrom='['/src/modules/**/*.service.{ts,js}']'",
-        "--detectOpenHandles"
+        "--no-cache"
       ],
       "envFile": "${workspaceFolder}/.env",
       "console": "integratedTerminal",

@@ -1,9 +1,9 @@
 import { IUser } from '@modules/users/user.interfaces';
-import { ITodo, ITodoRepository, ICreateToDoDTO } from './todo.interfaces';
+import { ITodo, ICreateToDoDTO } from './todo.interfaces';
 import { mockedTodos } from './__mocks__';
 
-export default class TodoRepository implements ITodoRepository {
-  public mock? = mockedTodos;
+export default class TodoRepository {
+  public mock? = mockedTodos();
 
   async list(user: IUser): Promise<ITodo[]> {
     return this.mock?.filter(i => i.user.id === user.id) || [];
