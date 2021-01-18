@@ -2,7 +2,7 @@ import { sign } from 'jsonwebtoken';
 import HttpException from '@shared/errors/HttpException';
 import { generateHash, compareHash } from '@shared/helpers/hashprovider';
 import { jwtConfig } from '@config/index';
-import { ICreateUserDTO, IUser, IAuthResponse } from './user.interfaces';
+import { ICreateUserDTO, IAuthResponse } from './user.interfaces';
 import { UserRepository } from '.';
 
 export default class UserService {
@@ -11,7 +11,11 @@ export default class UserService {
     private helper = { generateHash, compareHash },
   ) {}
 
-  public async create({ email, password }: ICreateUserDTO): Promise<IUser> {
+  public async create({
+    email,
+    password,
+    name,
+  }: ICreateUserDTO): Promise<{ id: string }> {
     const checkUserExists = await this.userRepository.findByEmail(email);
 
     if (checkUserExists) {
@@ -20,12 +24,13 @@ export default class UserService {
 
     const passwordHash = await this.helper.generateHash(password);
 
-    const user = await this.userRepository.create({
+    const result = await this.userRepository.create({
+      name,
       email,
       password: passwordHash,
     });
 
-    return user;
+    return result;
   }
 
   public async authenticate({

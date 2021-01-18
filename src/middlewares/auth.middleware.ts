@@ -30,6 +30,7 @@ export default function checkAuth(
 
     request.user = {
       id: sub,
+      name: 'string',
       email: 'string',
     };
 

@@ -15,7 +15,7 @@ routes.post(
     description: 'required|min:10',
   }),
   async (req, res) => {
-    const description = req.body;
+    const { description } = req.body;
     res.json(await todoService.create({ description, user: req.user }));
   },
 );

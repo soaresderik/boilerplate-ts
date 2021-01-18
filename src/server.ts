@@ -6,6 +6,7 @@ import 'express-async-errors';
 import cors from 'cors';
 import HttpException from '@shared/errors/HttpException';
 import routes from './routes';
+import { knex } from './config';
 
 (async () => {
   const app = express();
@@ -13,6 +14,10 @@ import routes from './routes';
   app.use(express.json());
   app.use(cors());
   app.use(routes);
+
+  await knex.migrate.latest().catch(err => {
+    throw err;
+  });
 
   app.use(
     (err: Error, request: Request, response: Response, _: NextFunction) => {

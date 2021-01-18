@@ -1,5 +1,6 @@
 export interface IUser {
   id: string;
+  name: string;
   email: string;
   password?: string;
   createdAt?: Date;
@@ -7,6 +8,7 @@ export interface IUser {
 }
 
 export interface ICreateUserDTO {
+  name: string;
   email: string;
   password: string;
 }

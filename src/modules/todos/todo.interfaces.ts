@@ -4,6 +4,7 @@ export interface ITodo {
   id: string;
   description: string;
   done: boolean;
+  userId?: string;
 }
 
 export interface ICreateToDoDTO {

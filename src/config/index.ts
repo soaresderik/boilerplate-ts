@@ -1,3 +1,6 @@
+import Knex from 'knex';
+import database from './knexfile';
+
 export const jwtConfig = (() => {
   const secret = process.env.SECRET_TOKEN as string;
 
@@ -8,3 +11,5 @@ export const jwtConfig = (() => {
     expiresIn: '1d',
   };
 })();
+
+export const knex = Knex(database);

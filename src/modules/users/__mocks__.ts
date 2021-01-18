@@ -3,6 +3,7 @@ import { IUser } from './user.interfaces';
 export const usersDraft = (wrap?: Partial<IUser>): IUser[] => [
   {
     id: wrap?.id || 'some_id',
+    name: wrap?.name || 'Name Person',
     email: wrap?.email || 'mockeduser@example.com',
     password:
       wrap?.password ||

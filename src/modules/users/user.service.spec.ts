@@ -4,6 +4,8 @@ import { usersDraft } from './__mocks__';
 describe('User Module', () => {
   it('Should be create a new user', async () => {
     const params = {
+      id: 'some-kind-of-id',
+      name: 'Some name',
       email: 'example@example.com',
       password: 'example',
     };
@@ -14,18 +16,19 @@ describe('User Module', () => {
 
     UserRepository.prototype.create = jest
       .fn()
-      .mockImplementationOnce(() => usersDraft({ email: params.email })[0]);
+      .mockImplementationOnce(() => usersDraft({ id: params.id })[0]);
 
     const userService = new UserService();
 
     const result = await userService.create(params);
 
-    expect(result.email).toBe(params.email);
+    expect(result.id).toBe(params.id);
   });
 
   it('Should be throw an error if user exist', async () => {
     try {
       const params = {
+        name: 'Some Name',
         email: 'mockeduser@example.com',
         password: 'example',
       };
