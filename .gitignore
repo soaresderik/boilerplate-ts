@@ -1,3 +1,4 @@
+db
 .idea/
 node_modules/
 .env
@@ -7,3 +8,5 @@ coverage
 tmp/*
 dist
 !tmp/.gitkeep
+package-*.json
+

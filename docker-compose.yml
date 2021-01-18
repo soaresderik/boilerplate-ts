@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  backend:
+    image: node:12
+    command: bash -c "npm install; npm run dev:server"
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - 3002:3002
+    links:
+      - db
+    environment:
+      APP_SECRET: a_big_secret_here
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: todolist
+      DB_PORT: 5432
+    networks:
+      - the_net
+    depends_on:
+      - db
+
+  db:
+    image: postgres:12
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      TZ: 'America/Sao_Paulo'
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - the_net
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    networks:
+      - the_net
+
+networks:
+  the_net:
+    driver: bridge
