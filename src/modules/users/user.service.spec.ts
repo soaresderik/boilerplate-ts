@@ -10,11 +10,11 @@ describe('User Module', () => {
       password: 'example',
     };
 
-    UserRepository.prototype.findByEmail = jest
+    UserRepository.prototype.findOne = jest
       .fn()
       .mockImplementationOnce(() => null);
 
-    UserRepository.prototype.create = jest
+    UserRepository.prototype.store = jest
       .fn()
       .mockImplementationOnce(() => usersDraft({ id: params.id })[0]);
 
@@ -33,7 +33,7 @@ describe('User Module', () => {
         password: 'example',
       };
 
-      UserRepository.prototype.findByEmail = jest.fn().mockImplementationOnce(
+      UserRepository.prototype.findOne = jest.fn().mockImplementationOnce(
         () =>
           usersDraft({
             email: params.email,
@@ -55,7 +55,7 @@ describe('User Module', () => {
       password: 'example',
     };
 
-    UserRepository.prototype.findByEmail = jest.fn().mockImplementationOnce(
+    UserRepository.prototype.findOne = jest.fn().mockImplementationOnce(
       () =>
         usersDraft({
           email: params.email,

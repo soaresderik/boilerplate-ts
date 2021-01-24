@@ -16,7 +16,7 @@ export default class UserService {
     password,
     name,
   }: ICreateUserDTO): Promise<{ id: string }> {
-    const checkUserExists = await this.userRepository.findByEmail(email);
+    const checkUserExists = await this.userRepository.findOne({ email });
 
     if (checkUserExists) {
       throw new HttpException('E-mail already exists', 406);
@@ -24,7 +24,7 @@ export default class UserService {
 
     const passwordHash = await this.helper.generateHash(password);
 
-    const result = await this.userRepository.create({
+    const result = await this.userRepository.store({
       name,
       email,
       password: passwordHash,
@@ -40,7 +40,7 @@ export default class UserService {
     email: string;
     password: string;
   }): Promise<IAuthResponse> {
-    const user = await this.userRepository.findByEmail(email);
+    const user = await this.userRepository.findOne({ email });
 
     if (!user || !user.password) {
       throw new HttpException('Incorrect email/password combination.', 401);

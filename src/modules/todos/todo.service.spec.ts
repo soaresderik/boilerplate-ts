@@ -4,7 +4,7 @@ import { mockedTodos } from './__mocks__';
 
 describe('Todo Module', () => {
   it('Should be list todos', async () => {
-    TodoRepository.prototype.list = jest
+    TodoRepository.prototype.find = jest
       .fn()
       .mockImplementationOnce(() => mockedTodos());
     const todoService = new TodoService();
@@ -19,7 +19,7 @@ describe('Todo Module', () => {
   it('Should be create a new todo', async () => {
     const params = { description: 'A mocked todo', user: usersDraft()[0] };
 
-    TodoRepository.prototype.create = jest.fn().mockImplementationOnce(
+    TodoRepository.prototype.store = jest.fn().mockImplementationOnce(
       () =>
         mockedTodos({
           description: params.description,
