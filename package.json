@@ -10,7 +10,7 @@
     "test": "env $(cat .env) jest --no-cache",
     "migrate:make": "knex --knexfile src/config/knexfile.ts migrate:make -x ts --",
     "migrate:latest": "knex --knexfile src/config/knexfile.ts migrate:latest",
-    "migrate:rollback": "knex --knexfile src/config/knexfile.ts migrate:rollback"
+    "migrate:rollback": "enc $(cat .env.local) knex --knexfile src/config/knexfile.ts migrate:rollback"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
